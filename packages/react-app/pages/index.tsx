@@ -8,6 +8,7 @@ import { ethers } from "ethers";
 import { WebBlsBlindingClient } from "@/utils/WebBlindingClient";
 import { IdentifierPrefix } from "@celo/identity/lib/odis/identifier";
 import { toast } from "react-hot-toast";
+import { SignInTwitterButton } from "@/components/SignInTwitterButton";
 
 let ONE_CENT_CUSD = ethers.utils.parseEther("0.01");
 const NOW_TIMESTAMP = Math.floor(new Date().getTime() / 1000);
@@ -192,44 +193,7 @@ export default function Home({}) {
                         {isConnected && <h3>Connected as:</h3>}
                         <ConnectButton showBalance={false} />
                     </div>
-                    <div className="border w-full space-y-4 p-4 flex flex-col border-black">
-                        {status === "unauthenticated" ? (
-                            <button
-                                onClick={() => signIn("twitter")}
-                                className="border-2 border-black px-4 py-2"
-                            >
-                                Sign in with Twitter
-                            </button>
-                        ) : status === "loading" ? (
-                            <h1>Loading...</h1>
-                        ) : (
-                            <>
-                                <h3>Signed as:</h3>
-                                <div className="flex space-x-2 w-full items-center">
-                                    <img
-                                        style={{
-                                            width: "50px",
-                                            height: "50px",
-                                            borderRadius: "100%",
-                                        }}
-                                        src={session!.user?.image as string}
-                                    />
-                                    <div className="flex flex-col">
-                                        <h2>{session!.user!.name}</h2>
-                                        <h3>{`@${session!.username.toLowerCase()}`}</h3>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-full space-y-2">
-                                    <button
-                                        className="border-2 border-black px-4 py-2"
-                                        onClick={() => signOut()}
-                                    >
-                                        Sign Out
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </div>
+                    <SignInTwitterButton session={session} />
                     {isConnected && status === "authenticated" && (
                         <button
                             onClick={() =>
@@ -287,44 +251,7 @@ export default function Home({}) {
                         {isConnected && <h3>Connected as:</h3>}
                         <ConnectButton showBalance={false} />
                     </div>
-                    <div className="border w-full space-y-4 p-4 flex flex-col border-black">
-                        {status === "unauthenticated" ? (
-                            <button
-                                onClick={() => signIn("twitter")}
-                                className="border-2 border-black px-4 py-2"
-                            >
-                                Sign in with Twitter
-                            </button>
-                        ) : status === "loading" ? (
-                            <h1>Loading...</h1>
-                        ) : (
-                            <>
-                                <h3>Signed as:</h3>
-                                <div className="flex space-x-2 w-full items-center">
-                                    <img
-                                        style={{
-                                            width: "50px",
-                                            height: "50px",
-                                            borderRadius: "100%",
-                                        }}
-                                        src={session!.user?.image as string}
-                                    />
-                                    <div className="flex flex-col">
-                                        <h2>{session!.user!.name}</h2>
-                                        <h3>{`@${session!.username.toLowerCase()}`}</h3>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-full space-y-2">
-                                    <button
-                                        className="border-2 border-black px-4 py-2"
-                                        onClick={() => signOut()}
-                                    >
-                                        Sign Out
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </div>
+                    <SignInTwitterButton session={session} />
                     {isConnected && status === "authenticated" && (
                         <button
                             onClick={() =>

@@ -13,7 +13,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 export default function Header() {
     const [titleText, setTitleText] = useState('Default Title'); // Set initial title
     // const [session, loading] = useSession();
-    const {address, connector} = useAccount();
+    // const {address, connector} = useAccount();
 
     return (
         <nav className="bg-prosperity flex justify-between items-center border-b py-4 border-black">

@@ -9,6 +9,11 @@ import { WebBlsBlindingClient } from "@/utils/WebBlindingClient";
 import { IdentifierPrefix } from "@celo/identity/lib/odis/identifier";
 import { toast } from "react-hot-toast";
 import { Title } from "../components/Title";
+import { LookUpResult } from "../components/LookUpResult";
+import { SignInTwitterButton } from "@/components/SignInTwitterButton";
+import { Issuer } from "@/components/Issuer";
+import {UnlinkComponent} from "@/components/UnlinkComponent";
+import {LinkComponent} from "@/components/LinkComponent";
 
 let ONE_CENT_CUSD = ethers.utils.parseEther("0.01");
 const NOW_TIMESTAMP = Math.floor(new Date().getTime() / 1000);
@@ -191,61 +196,9 @@ export default function Admin() {
             <div className="flex space-x-4">
                 <div className="w-[400px] border border-black p-4 flex-col flex space-y-2">
                     <h2>Registration</h2>
-                    <div className="border w-full space-y-4 p-4 flex items-center flex-col border-black">
-                        {isConnected && <h3>Connected as:</h3>}
-                        <ConnectButton showBalance={false} />
-                    </div>
-                    <div className="border w-full space-y-4 p-4 flex flex-col border-black">
-                        {status === "unauthenticated" ? (
-                            <button
-                                onClick={() => signIn("twitter")}
-                                className="border-2 border-black px-4 py-2"
-                            >
-                                Sign in with Twitter
-                            </button>
-                        ) : status === "loading" ? (
-                            <h1>Loading...</h1>
-                        ) : (
-                            <>
-                                <h3>Signed as:</h3>
-                                <div className="flex space-x-2 w-full items-center">
-                                    <img
-                                        style={{
-                                            width: "50px",
-                                            height: "50px",
-                                            borderRadius: "100%",
-                                        }}
-                                        src={session!.user?.image as string}
-                                    />
-                                    <div className="flex flex-col">
-                                        <h2>{session!.user!.name}</h2>
-                                        <h3>{`@${session!.username.toLowerCase()}`}</h3>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-full space-y-2">
-                                    <button
-                                        className="border-2 border-black px-4 py-2"
-                                        onClick={() => signOut()}
-                                    >
-                                        Sign Out
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                    {isConnected && status === "authenticated" && (
-                        <button
-                            onClick={() =>
-                                registerIdentifier(
-                                    session.username.toLowerCase(),
-                                    address
-                                )
-                            }
-                            className="border-2 border-black px-4 py-2"
-                        >
-                            Link Wallet
-                        </button>
-                    )}
+                    <SignInTwitterButton />
+                    <LinkComponent isConnected = {isConnected} status = {status} session={session} address ={address} registerIdentifier/>
+                    <UnlinkComponent session= {session} status = {status} address = {address} isConnected = {isConnected} revokeIdentifier = {revokeIdentifier}/>
                 </div>
                 <div className="w-[400px] border justify-between border-black p-4 flex-col flex space-y-2">
                     <div className="flex flex-col space-y-2">
@@ -257,25 +210,7 @@ export default function Admin() {
                             onChange={handleLookupValueChange}
                         />
                     </div>
-                    <div className="flex flex-col justify-start h-full">
-                        {lookupResult.map((address) => {
-                            return (
-                                <div className="flex border py-2 px-4 border-black">
-                                    <a
-                                        href={`https://explorer.celo.org/address/${address}`}
-                                        target="_blank"
-                                        key={address}
-                                    >
-                                        <h4 className="underline">{`${(
-                                            address as string
-                                        ).slice(0, 10)}...${(
-                                            address as string
-                                        ).slice(-10)}`}</h4>
-                                    </a>
-                                </div>
-                            );
-                        })}
-                    </div>
+                    <LookUpResult lookupResult = {lookupResult}/>
                     <button
                         onClick={() => lookupAddresses(lookupValue)}
                         className="border-2 border-black px-4 py-2"
@@ -284,79 +219,8 @@ export default function Admin() {
                         Search
                     </button>
                 </div>
-                <div className="w-[400px] border border-black p-4 flex-col flex space-y-2">
-                    <h2>Revoke</h2>
-                    <div className="border w-full space-y-4 p-4 flex items-center flex-col border-black">
-                        {isConnected && <h3>Connected as:</h3>}
-                        <ConnectButton showBalance={false} />
-                    </div>
-                    <div className="border w-full space-y-4 p-4 flex flex-col border-black">
-                        {status === "unauthenticated" ? (
-                            <button
-                                onClick={() => signIn("twitter")}
-                                className="border-2 border-black px-4 py-2"
-                            >
-                                Sign in with Twitter
-                            </button>
-                        ) : status === "loading" ? (
-                            <h1>Loading...</h1>
-                        ) : (
-                            <>
-                                <h3>Signed as:</h3>
-                                <div className="flex space-x-2 w-full items-center">
-                                    <img
-                                        style={{
-                                            width: "50px",
-                                            height: "50px",
-                                            borderRadius: "100%",
-                                        }}
-                                        src={session!.user?.image as string}
-                                    />
-                                    <div className="flex flex-col">
-                                        <h2>{session!.user!.name}</h2>
-                                        <h3>{`@${session!.username.toLowerCase()}`}</h3>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-full space-y-2">
-                                    <button
-                                        className="border-2 border-black px-4 py-2"
-                                        onClick={() => signOut()}
-                                    >
-                                        Sign Out
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                    {isConnected && status === "authenticated" && (
-                        <button
-                            onClick={() =>
-                                revokeIdentifier(
-                                    session.username.toLowerCase(),
-                                    address
-                                )
-                            }
-                            className="border-2 border-black px-4 py-2"
-                        >
-                            Unlink Wallet
-                        </button>
-                    )}
-                </div>
-            </div>
-            {issuer && (
-                <div className="border flex py-2 justify-center border-black">
-                    <h3>
-                        Issuer Address:{" "}
-                        <a
-                            href={`https://explorer.celo.org/alfajores/address/${issuer.address}`}
-                            className="underline"
-                            target="_blank"
-                        >
-                            {issuer.address}
-                        </a>
-                    </h3>
-                </div>
-            )}
+                           </div>
+            <Issuer issuer={issuer} />
         </div>
     );
 }
