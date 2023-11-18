@@ -50,6 +50,7 @@ export default function Home({}) {
         console.log(remainingQuota);
 
         if (remainingQuota < 1) {
+            console.log(issuer.address, odisPaymentsContract.address);
             const currentAllowance = await stableTokenContract.allowance(
                 issuer.address,
                 odisPaymentsContract.address
@@ -58,12 +59,11 @@ export default function Home({}) {
             let enoughAllowance: boolean = false;
 
             if (ONE_CENT_CUSD.gt(currentAllowance)) {
-                const approvalTxReceipt = await stableTokenContract
+                const approvalTxReceipt = (await stableTokenContract
                     .increaseAllowance(
                         odisPaymentsContract.address,
                         ONE_CENT_CUSD
-                    )
-                    .sendAndWaitForReceipt();
+                    )).wait();
                 console.log("approval status", approvalTxReceipt.status);
                 enoughAllowance = approvalTxReceipt.status;
             } else {
@@ -72,9 +72,9 @@ export default function Home({}) {
 
             // increase quota
             if (enoughAllowance) {
-                const odisPayment = await odisPaymentsContract
-                    .payInCUSD(issuer.address, ONE_CENT_CUSD)
-                    .sendAndWaitForReceipt();
+                const odisPayment = await (odisPaymentsContract
+                    .payInCUSD(issuer.address, ONE_CENT_CUSD))
+                    .wait();
                 console.log("odis payment tx status:", odisPayment.status);
                 console.log(
                     "odis payment tx hash:",

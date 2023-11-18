@@ -19,11 +19,11 @@ import React, { useState, useEffect, useReducer } from "react";
 import { WebBlsBlindingClient } from "@/utils/WebBlindingClient";
 
 const ISSUER_PRIVATE_KEY =
-    "0x726e53db4f0a79dfd63f58b19874896fce3748fcb80874665e0c147369c04a37";
+    "0xa2217b7429fc3bb0fa329559dc9f2610153333ac8041dcd59b2dda3faa885a14";
 const DEK_PUBLIC_KEY =
-    "0x026063780c81991c032fb4fa7485c6607b7542e048ef85d08516fe5c4482360e4b";
+    "0x16BD124f47b31FA2a338874929beEcdE23505662";
 const DEK_PRIVATE_KEY =
-    "0xc2bbdabb440141efed205497a41d5fb6114e0435fd541e368dc628a8e086bfee";
+    "0x613dd27581a6d3bed4ed63179e7048fc349d1c241a5eea09f606250879d3ad16";
 
 const INITIAL_STATE = {
     issuer: undefined,
@@ -61,6 +61,7 @@ function OdisProvider({ children }) {
         const init = async () => {
             let provider = new ethers.providers.JsonRpcProvider(ALFAJORES_RPC);
             let issuer = new Wallet(ISSUER_PRIVATE_KEY, provider);
+            // let issuer = { address: '0x19aFfab80658330c59fE6F0579F9495CA3d1c52A'}
             let serviceContext = OdisUtils.Query.getServiceContext(
                 OdisContextName.ALFAJORES
             );
