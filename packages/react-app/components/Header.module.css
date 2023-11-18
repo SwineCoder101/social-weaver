@@ -1,0 +1,25 @@
+/* Header.module.css */
+
+.headerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px; /* Adjust the height as needed */
+    width: 100%;
+    /* Add more styles for your header here */
+}
+
+.headerTitleContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+.headerTitle {
+    margin: 0;
+    font-size: 24px;
+    /* Add more styles for your title here */
+}
