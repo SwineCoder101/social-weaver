@@ -17,7 +17,7 @@
         "@heroicons/react": "^2.0.16",
         "@rainbow-me/rainbowkit": "^0.12.2",
         "axios": "^1.4.0",
-        "blind-threshold-bls": "https://github.com/celo-org/blind-threshold-bls-wasm#3d1013af",
+        "blind-threshold-bls": "https://github.com/celo-org/blind-threshold-bls-wasm#24d4a190b9d7e834c84dbe5d853e0630ad453856",
         "dotenv": "^16.0.3",
         "ethers": "^5.7.2",
         "next": "13.2.4",
@@ -41,5 +41,6 @@
     },
     "browser": {
         "net": false
-    }
+    },
+    "packageManager": "yarn@1.22.19"
 }
