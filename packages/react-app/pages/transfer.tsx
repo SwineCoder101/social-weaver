@@ -15,6 +15,12 @@ export default function Transfer() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [lookupValue, setLookupValue] = useState("");
     const [lookupResult, setLookupResult] = useState([]);
+    const chains = ['Chain 1', 'Chain 2', 'Chain 3'];
+    const tokens = ['Token 1', 'Token 2', 'Token 3'];
+
+    const [selectedChain, setSelectedChain] = useState(chains[0]);
+    const [selectedToken, setSelectedToken] = useState(tokens[0]);
+
     const {
         issuer,
         serviceContext,
@@ -211,22 +217,56 @@ export default function Transfer() {
         }
     }
 
-
-
-
+        const handleChainChange = (event) => {
+            setSelectedChain(event.target.value);
+        };
+    
+        const handleTokenChange = (event) => {
+            setSelectedToken(event.target.value);
+        };
 
     return (
         <>
         <Title text= "Cross Transfer" />
         <div className="w-[400px] border justify-between border-black p-4 flex-col flex space-y-2">
                     <div className="flex flex-col space-y-2">
-                        <h2>Lookup</h2>
+                        <h2>Twitter:</h2>
                         <input
                             className="border border-black px-4 py-2"
                             placeholder="Twitter handle only (not @)"
                             value={lookupValue}
                             onChange={handleLookupValueChange}
                         />
+                    </div>
+                    <div>
+                        <div className="flex flex-col space-y-2">
+                            <h2>Select Chain:</h2>
+                            <select
+                                className="border border-black px-4 py-2"
+                                value={selectedChain}
+                                onChange={handleChainChange}
+                            >
+                                {chains.map((chain) => (
+                                    <option key={chain} value={chain}>
+                                        {chain}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="flex flex-col space-y-2">
+                            <h2>Select Token:</h2>
+                            <select
+                                className="border border-black px-4 py-2"
+                                value={selectedToken}
+                                onChange={handleTokenChange}
+                            >
+                                {tokens.map((token) => (
+                                    <option key={token} value={token}>
+                                        {token}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
                     <div className="flex flex-col justify-start h-full">
                         {lookupResult.map((address) => {
@@ -247,12 +287,14 @@ export default function Transfer() {
                             );
                         })}
                     </div>
+
+
                     <button
                         onClick={() => lookupAddresses(lookupValue)}
                         className="border-2 border-black px-4 py-2"
                         disabled={lookupValue == ""}
                     >
-                        Search
+                        Transfer
                     </button>
                 </div>
         </>

@@ -28,6 +28,23 @@ export default function Header() {
                     </span>
                 </Link>
             </div>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  {componentInitialized && address ? (
+                    <button
+                      type="button"
+                      className="inline-flex content-center place-items-center rounded-full border border-wood bg-black py-2 px-5 text-md font-medium text-snow hover:bg-forest"
+                      onClick={disconnect}
+                    >Disconnect</button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="inline-flex content-center place-items-center rounded-full border border-wood bg-forest py-2 px-5 text-md font-medium text-snow hover:bg-black"
+                      onClick={() =>
+                        connect().catch((e) => console.log((e as Error).message))
+                      }
+                    >Connect</button>
+                  )}
+                </div>
         </nav>
     );
 }
