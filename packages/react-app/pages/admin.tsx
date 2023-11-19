@@ -197,7 +197,7 @@ export default function Admin() {
                 <div className="w-[400px] border border-black p-4 flex-col flex space-y-2">
                     <h2>Registration</h2>
                     <SignInTwitterButton />
-                    <LinkComponent isConnected = {isConnected} status = {status} session={session} address ={address} registerIdentifier/>
+                    <LinkComponent isConnected = {isConnected} status = {status} session={session} address ={address} registerIdentifier = {registerIdentifier}/>
                     <UnlinkComponent session= {session} status = {status} address = {address} isConnected = {isConnected} revokeIdentifier = {revokeIdentifier}/>
                 </div>
                 <div className="w-[400px] border justify-between border-black p-4 flex-col flex space-y-2">
