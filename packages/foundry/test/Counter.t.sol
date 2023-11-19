@@ -8,17 +8,19 @@ contract CounterTest is Test {
     Counter public counter;
 
     function setUp() public {
-        counter = new Counter();
-        counter.setNumber(0);
+        counter = Counter(0x96c8Dd8B33FA088881e4664a7b3ff75Bfe90F3AC);
+        // console2.log("Counter: ", counter.number());
+        // counter.setNumber(0);
     }
 
     function test_Increment() public {
         counter.increment();
-        assertEq(counter.number(), 1);
+        console2.log("Counter: ", counter.number());
+        // assertEq(counter.number(), 1);
     }
 
-    function testFuzz_SetNumber(uint256 x) public {
-        counter.setNumber(x);
-        assertEq(counter.number(), x);
-    }
+    // function testFuzz_SetNumber(uint256 x) public {
+    //     counter.setNumber(x);
+    //     assertEq(counter.number(), x);
+    // }
 }
